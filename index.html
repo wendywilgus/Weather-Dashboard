@@ -19,10 +19,21 @@
 </head>
 
 <body>
-    <header class="p-5 text-center text-white bg-primary">
-        <h1>Weather Dashboard</h1>
-      </header>
-      <input id="city" type="text" placeholder="Enter a city"></input>
+    <div class="container-fluid">
+            <header class="p-5 text-center text-white ">
+            <h1>Weather Dashboard</h1>
+            </header>
+    </div>
+
+    <div class="row">
+        <div class="col-3 bg-light m-10" id="searchResults">
+            <div class="row">
+                <div class="col-12">
+                    <h4>Search for a City:</h4>
+                </div>
+            </div>
+        
+            <input id="city" type="text" placeholder="Enter a city"></input>
     <button id="fetch-button">
         Submit
     </button>
