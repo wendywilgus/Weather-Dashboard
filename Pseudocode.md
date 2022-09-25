@@ -4,6 +4,8 @@ How do I get the weather data?
     https://openweathermap.org/forecast5
     https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys
 
+`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${e5fd74ef0282ecdaf377823bb26acafb}`;
+
 
 1. Weather dashboard displays
     Header:  Weather Dashboard
