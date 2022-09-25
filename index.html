@@ -4,40 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script type = "text/JavaScript" src = " https://MomentJS.com/downloads/moment.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 
   <link rel="stylesheet" href="./Develop/style.css" />
-
 
   <title>Weather Dashboard</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-            <header class="p-5 text-center text-white ">
+    <div class="row navbar text-center text-white p-2">
+        <div class="col-12 text-center">
             <h1>Weather Dashboard</h1>
-            </header>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-3 bg-light m-10" id="searchResults">
-            <div class="row">
-                <div class="col-12">
-                    <h4>Search for a City:</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 bg-light">
+                <h3 id="searchResults">Search for a City:</h3>
+                <div class="input-group">
+                    <input id="city" type="text" class="form-control" placeholder="Enter a city" aria-label="Enter a city">
+                </div>
+                <div>
+                    <button id="fetch-button" class="btn btn-primary d-grid gap-2 col-6 mt-3">Search</button>
                 </div>
             </div>
-        
-            <input id="city" type="text" placeholder="Enter a city"></input>
-    <button id="fetch-button">
-        Submit
-    </button>
 
+            <div class="row mt-3">
+                <div class="col-12">
+                    <ul id="searchHistory" class="list-group">
+                        <!-- append li here li class="list-group-item"-->
+                    </ul>
+                </div>
+            </div>
+    </div>
+            
+    
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 
 <script src="./Develop/script.js"></script>
 

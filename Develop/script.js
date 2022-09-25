@@ -8,7 +8,7 @@ console.log(city);
 function displayWeather(city) {
     city = document.getElementById('city').value;
  
-    var requestURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
+    var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
     // console.log(requestURL);
 
 
