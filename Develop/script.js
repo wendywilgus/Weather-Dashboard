@@ -2,6 +2,8 @@
 var fetchButton = document.getElementById('fetch-button');
 var APIKey= "e5fd74ef0282ecdaf377823bb26acafb";
 var city;
+var searchHistory = document.getElementById("searchHistory");
+
 
 console.log(city);
 
@@ -10,6 +12,11 @@ function displayWeather(city) {
  
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
     // console.log(requestURL);
+    localStorage.setItem(city, `${city}`);
+
+    function fetLocalStorage() {
+        ul.innerHTML = '<li>' + localStorage.getItem(city) + '</li>'
+    }
 
 
   fetch(requestURL)
@@ -25,6 +32,7 @@ function displayWeather(city) {
         console.error("map API error: ", error);
     })
 }
+// Append data to the div
 
 function cityCoordinates()  {
     city = document.getElementById('city').value;
@@ -44,6 +52,11 @@ function cityCoordinates()  {
         console.error("map API error: ", error);
     })
 }
+
+// for (var i = 0; i < localStorage.length; i++) {
+//     searchHistory.append(<li> + localStorage.getItem(localStorage.key(i)) + </li>);
+// }
+
 var five = [];
 
 function extendedForecast(lat,lon) {
@@ -62,7 +75,9 @@ function extendedForecast(lat,lon) {
             five.push(data.list[27]);
             five.push(data.list[35]);
         })
-}
+} 
+// append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
+
 function displayForecast()  {
     for (var i = 0; i < five.length; i++);
         //CREATE CARDS FOR EACH ITERATION

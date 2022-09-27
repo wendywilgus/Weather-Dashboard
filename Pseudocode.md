@@ -72,7 +72,7 @@ Using the 5 Day Weather Forecast API, you'll notice that you will need to pass i
         -And then, I need to ppopulate these cards to the 5-day forecast div that I made.
     
     E. I need to find a way to have the user's previous searches PERSIST on the page.
-        - Is there a way to sotre MULTIPLE user searches in a single reference? (HINT:  starts with the letter A!)
+        - Is there a way to sotre MULTIPLE user searches in a single reference? (HINT:  starts with the letter A!) ATTRIBUTE???
         - I need to find a way to have this data **PERSIST** Maybe add some kind of **STORAGE**
         - If we have this data in the  storage, maybe we can **SET** the **ITEMS** as a KEY-VALUE, and then **GET** the **ITEMS** when the page loads.
         - Since the previous searches need to immediately populate on the screen, I need to GET these items when the page loads. 
