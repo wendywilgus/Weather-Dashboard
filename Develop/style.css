@@ -2,3 +2,12 @@
     background: #09347D;
     height: 75px;
 }
+
+hr {
+    border-color: black !important;
+    border: 3px;
+}
+
+.row-1  {
+    background-color: red;
+}

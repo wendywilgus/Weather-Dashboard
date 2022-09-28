@@ -2,10 +2,24 @@
 var fetchButton = document.getElementById('fetch-button');
 var APIKey= "e5fd74ef0282ecdaf377823bb26acafb";
 var city;
-var searchHistory = document.getElementById("searchHistory");
-
+var searchHistory = document.getElementById("searchResults");
+var currentCity = document.getElementById("current-city");
+var todaysDate = moment().format("MMMM Do, YYYY");
+var temp = document.getElementById("tempEl");
+var icon = document.getElementById("weather-icon");
+var humidity = document.getElementById("humidity");
+var temp = document.getElementById("windSpeed");
 
 console.log(city);
+
+
+const dateElement = document.getElementById("current-date");
+dateElement.innerHTML = `Today is ${todaysDate}`;
+
+function kelvinConverter(valNum){
+    valNum = parseFloat(valNum);
+    temp.innerHTML= (Math.floor((valNum-273.15)*1.8)+32)+' \u00B0F';
+}
 
 function displayWeather(city) {
     city = document.getElementById('city').value;
@@ -14,25 +28,32 @@ function displayWeather(city) {
     // console.log(requestURL);
     localStorage.setItem(city, `${city}`);
 
-    function fetLocalStorage() {
-        ul.innerHTML = '<li>' + localStorage.getItem(city) + '</li>'
-    }
-
 
   fetch(requestURL)
     .then(function (response) {
         console.log("map API response:", response);
-      return response.json();
+        return response.json();   
     })
     .then(function (data) {
+        let citySearched = data.name;
+        // console.log( citySearched);
+        currentCity.innerHTML = citySearched;
         console.log("map API data:", data);
-        console.log(data.wind.speed);
+        console.log("windspeed", data.wind.speed);
+        kelvinConverter(data.main.temp);
+
+        return data;
+
     })
     .catch(function(error) {
         console.error("map API error: ", error);
     })
 }
 // Append data to the div
+
+function fetchLocalStorage() {
+    searchHistory.innerHTML = '<li>' + localStorage.getItem(city) + '</li>'
+}
 
 function cityCoordinates()  {
     city = document.getElementById('city').value;
@@ -61,7 +82,7 @@ var five = [];
 
 function extendedForecast(lat,lon) {
     var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`
-    console.log(fiveDays);
+    console.log("5 days", fiveDays);
 
     fetch(fiveDays)
         .then(function (response)   {
@@ -86,4 +107,5 @@ function displayForecast()  {
 fetchButton.addEventListener('click', function() {
     cityCoordinates();
     displayWeather(city);
+
 });
