@@ -6,7 +6,8 @@ var searchHistory = document.getElementById("searchResults");
 var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
-var icon = document.getElementById("weather-icon");
+// var icon = document.getElementById("weather-icon");
+// console.log("icon", icon);
 
 // var humidity = document.getElementById("humidity");
 var currentHumidity= $("#humidity");
@@ -46,7 +47,7 @@ function displayWeather(city) {
         kelvinConverter(data.main.temp);
         $('.humidity').text("Humidity: " + data.main.humidity + "%");
         $('#windSpeed').text("Wind Speed: " + Math.floor(data.wind.speed*2.237) + "MPH");
-
+        $('.weather-icon').html(`<img src='https://openweathermap.org/img/w/${data.weather[0].icon}.png' />`);
 
         return data;
 
