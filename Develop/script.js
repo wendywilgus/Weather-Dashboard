@@ -10,7 +10,7 @@ var icon = document.getElementById("weather-icon");
 
 // var humidity = document.getElementById("humidity");
 var currentHumidity= $("#humidity");
-var windSpeed = $("#windSpeed");
+var windSpeed = $("windSpeed");
 
 console.log(city);
 
@@ -45,8 +45,8 @@ function displayWeather(city) {
         console.log("windspeed", data.wind.speed);
         kelvinConverter(data.main.temp);
         $('.humidity').text("Humidity: " + data.main.humidity + "%");
-        windSpeed.innerHTML = ("Wind Speed: " + (data.wind.speed * 2.237) + "MPH");
-        
+        $('#windSpeed').text("Wind Speed: " + Math.floor(data.wind.speed*2.237) + "MPH");
+
 
         return data;
 
