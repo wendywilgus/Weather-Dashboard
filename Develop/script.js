@@ -7,8 +7,10 @@ var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
 var icon = document.getElementById("weather-icon");
-var humidity = document.getElementById("humidity");
-var temp = document.getElementById("windSpeed");
+
+// var humidity = document.getElementById("humidity");
+var currentHumidity= $("#humidity");
+var windSpeed = $("#windSpeed");
 
 console.log(city);
 
@@ -18,8 +20,9 @@ dateElement.innerHTML = `Today is ${todaysDate}`;
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
-    temp.innerHTML= (Math.floor((valNum-273.15)*1.8)+32)+' \u00B0F';
+    temp.innerHTML= ' '+ (Math.floor((valNum-273.15)*1.8)+32)+' \u00B0F';
 }
+
 
 function displayWeather(city) {
     city = document.getElementById('city').value;
@@ -41,6 +44,9 @@ function displayWeather(city) {
         console.log("map API data:", data);
         console.log("windspeed", data.wind.speed);
         kelvinConverter(data.main.temp);
+        $('.humidity').text("Humidity: " + data.main.humidity + "%");
+        windSpeed.innerHTML = ("Wind Speed: " + (data.wind.speed * 2.237) + "MPH");
+        
 
         return data;
 
