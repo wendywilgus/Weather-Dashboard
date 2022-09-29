@@ -20,7 +20,7 @@ dateElement.innerHTML = `Today is ${todaysDate}`;
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
-    temp.innerHTML= ' '+ (Math.floor((valNum-273.15)*1.8)+32)+' \u00B0F';
+    temp.innerHTML= 'Temperature: '+ (Math.floor((valNum-273.15)*1.8)+32)+' \u00B0F';
 }
 
 
