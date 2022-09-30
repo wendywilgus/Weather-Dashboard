@@ -113,7 +113,6 @@ function extendedForecast(lat,lon) {
         const fiveDayEl = document.querySelectorAll(".fiveDay");
         for (i = 0; i < fiveDayEl.length; i++) {
             fiveDayEl[i].innerHTML = "";
-            fiveDayEl[i].append(five.push([]));
         }
 } 
 // append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
