@@ -2,7 +2,11 @@
 var fetchButton = document.getElementById('fetch-button');
 var APIKey= "e5fd74ef0282ecdaf377823bb26acafb";
 var city;
-var searchHistory = document.getElementById("searchHistory");
+let searchHistory = JSON.parse(localStorage.getItem("search"));
+if (!searchHistory) {
+    searchHistory = [];
+} 
+console.log("history", searchHistory);
 var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
@@ -12,12 +16,25 @@ var temp = document.getElementById("tempEl");
 // var humidity = document.getElementById("humidity");
 var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
-
+var five = [];
 // console.log(city);
 
 
 const dateElement = document.getElementById("current-date");
 dateElement.innerHTML = `Today is ${todaysDate}`;
+
+function getCitiesFromStorage() {
+    var previousCities = JSON.parse(localStorage.getItem("search", searchHistory));
+    console.log("previous", previousCities);
+    
+    // create an HTML Entity button with City label
+    // onClick eventCallback will call new event function
+    //          inside that function 
+    //              define city again
+    //              call displayWeather();
+    cityCoordinates();
+}
+getCitiesFromStorage();
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
@@ -25,53 +42,50 @@ function kelvinConverter(valNum){
 }
 
 
-function displayWeather(city) {
+function displayWeather() {
     city = document.getElementById('city').value;
+    console.log("displayWeather city", city);
  
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
-    // console.log(requestURL);
-    localStorage.setItem(city, `${city}`);
 
+    
+    fetch(requestURL)
+        .then(function (response) {
+            console.log("map API response:", response);
+            return response.json();   
+        })
+        .then(function (data) {
+            console.log('displayWeather onResponse', data);
+            if(data.cod == '200') {
+                // ONLY save city when one is valid
+                searchHistory.push(city);
+                localStorage.setItem("search", JSON.stringify(searchHistory));
+                getCitiesFromStorage();
+    
+                let citySearched = data.name;
+                // console.log( citySearched);
+                currentCity.innerHTML = citySearched;
+                console.log("map API data:", data);
+                console.log("windspeed", data.wind.speed);
+                kelvinConverter(data.main.temp);
+                $('.humidity').text("Humidity: " + data.main.humidity + "%");
+                $('#windSpeed').text("Wind Speed: " + Math.floor(data.wind.speed*2.237) + "MPH");
+                $('.weather-icon').html(`<img src='https://openweathermap.org/img/w/${data.weather[0].icon}.png' />`);
+    
+                return data;
+            }
 
-  fetch(requestURL)
-    .then(function (response) {
-        console.log("map API response:", response);
-        return response.json();   
-    })
-    .then(function (data) {
-        let citySearched = data.name;
-        // console.log( citySearched);
-        currentCity.innerHTML = citySearched;
-        console.log("map API data:", data);
-        console.log("windspeed", data.wind.speed);
-        kelvinConverter(data.main.temp);
-        $('.humidity').text("Humidity: " + data.main.humidity + "%");
-        $('#windSpeed').text("Wind Speed: " + Math.floor(data.wind.speed*2.237) + "MPH");
-        $('.weather-icon').html(`<img src='https://openweathermap.org/img/w/${data.weather[0].icon}.png' />`);
-
-        return data;
-
-    })
-    .catch(function(error) {
-        console.error("map API error: ", error);
-    })
+        })
+        .catch(function(error) {
+            console.error("map API error: ", error);
+        })
 }
-// Get Search History
-fetchButton.addEventListener("click", function () {
-    const searchTerm = city.text;
-    console.log("City", searchTerm);
-    getWeather(searchTerm);
-    searchHistory.push(searchTerm);
-    localStorage.setItem("search", JSON.stringify(searchHistory));
-    renderSearchHistory();
-})
 
-function fetchLocalStorage() {
-    searchHistory.innerHTML = '<li>' + localStorage.getItem(city) + '</li>'
-}
+
+
 
 function cityCoordinates()  {
-    city = document.getElementById('city').value;
+    console.log("cityCoordinates city", city);
 
     var fiveDay = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${APIKey}`;
 
@@ -91,8 +105,6 @@ function cityCoordinates()  {
 
 
 
-var five = [];
-
 function extendedForecast(lat,lon) {
     var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`
     console.log("5 days", fiveDays);
@@ -102,28 +114,29 @@ function extendedForecast(lat,lon) {
             return response.json();
         })
         .then(function (data)   {
-            console.log(data);
+            console.log('extendedForecast onReponse:', data);
             five.push(data.list[3]);
             five.push(data.list[11]);
             five.push(data.list[19]);
             five.push(data.list[27]);
             five.push(data.list[35]);
         })
-    // Code to display 5-Day forcast to cards
-        const fiveDayEl = document.querySelectorAll(".fiveDay");
-        for (i = 0; i < fiveDayEl.length; i++) {
-            fiveDayEl[i].innerHTML = "";
-        }
-} 
-// append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
+ 
 
-function displayForecast()  {
-    for (var i = 0; i < five.length; i++);
-        //CREATE CARDS FOR EACH ITERATION
+// append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
+ //CREATE CARDS FOR EACH ITERATION
+    .then(function (response)   {
+        // five[i].innerHTML = "";
+        // var dayOne = moment(response.list[3].dt_txt).format("ddd, MMM D");
+    })
 }
 
+
 fetchButton.addEventListener('click', function() {
+    displayWeather();
     cityCoordinates();
-    displayWeather(city);
     event.preventDefault();
+    // console.log("City", searchTerm);
+    // displayWeather(searchTerm);
+    // renderSearchHistory();
 })
