@@ -2,7 +2,7 @@
 var fetchButton = document.getElementById('fetch-button');
 var APIKey= "e5fd74ef0282ecdaf377823bb26acafb";
 var city;
-var searchHistory = document.getElementById("searchResults");
+var searchHistory = document.getElementById("searchHistory");
 var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
@@ -13,7 +13,7 @@ var temp = document.getElementById("tempEl");
 var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
 
-console.log(city);
+// console.log(city);
 
 
 const dateElement = document.getElementById("current-date");
@@ -56,7 +56,15 @@ function displayWeather(city) {
         console.error("map API error: ", error);
     })
 }
-// Append data to the div
+// Get Search History
+fetchButton.addEventListener("click", function () {
+    const searchTerm = city.text;
+    console.log("City", searchTerm);
+    getWeather(searchTerm);
+    searchHistory.push(searchTerm);
+    localStorage.setItem("search", JSON.stringify(searchHistory));
+    renderSearchHistory();
+})
 
 function fetchLocalStorage() {
     searchHistory.innerHTML = '<li>' + localStorage.getItem(city) + '</li>'
@@ -81,9 +89,7 @@ function cityCoordinates()  {
     })
 }
 
-// for (var i = 0; i < localStorage.length; i++) {
-//     searchHistory.append(<li> + localStorage.getItem(localStorage.key(i)) + </li>);
-// }
+
 
 var five = [];
 
@@ -103,6 +109,12 @@ function extendedForecast(lat,lon) {
             five.push(data.list[27]);
             five.push(data.list[35]);
         })
+    // Code to display 5-Day forcast to cards
+        const fiveDayEl = document.querySelectorAll(".fiveDay");
+        for (i = 0; i < fiveDayEl.length; i++) {
+            fiveDayEl[i].innerHTML = "";
+            fiveDayEl[i].append(five.push([]));
+        }
 } 
 // append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
 
@@ -114,5 +126,5 @@ function displayForecast()  {
 fetchButton.addEventListener('click', function() {
     cityCoordinates();
     displayWeather(city);
-
-});
+    event.preventDefault();
+})
