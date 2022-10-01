@@ -10,14 +10,11 @@ console.log("history", searchHistory);
 var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
-// var icon = document.getElementById("weather-icon");
-// console.log("icon", icon);
 
-// var humidity = document.getElementById("humidity");
 var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
 var five = [];
-// console.log(city);
+
 
 
 const dateElement = document.getElementById("current-date");
@@ -28,13 +25,21 @@ function getCitiesFromStorage() {
     console.log("previous", previousCities);
     
     // create an HTML Entity button with City label
+    for (var i = 0; i < previousCities.length; i++) {
+        var btn = document.createElement("button");
+        var t = document.createTextNode(previousCities[i]);
+        btn.appendChild(t);
+        var cityList = document.getElementById("history");
+        cityList.appendChild(btn);
+    
     // onClick eventCallback will call new event function
     //          inside that function 
     //              define city again
     //              call displayWeather();
-    cityCoordinates();
+    //              call cityCoordinates();
+    }
 }
-getCitiesFromStorage();
+window.onload = getCitiesFromStorage();
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
@@ -60,10 +65,14 @@ function displayWeather() {
                 // ONLY save city when one is valid
                 searchHistory.push(city);
                 localStorage.setItem("search", JSON.stringify(searchHistory));
-                getCitiesFromStorage();
+                // getCitiesFromStorage();
+                var btn = document.createElement("button");
+                var t = document.createTextNode(city);
+                btn.appendChild(t);
+                var cityList = document.getElementById("history");
+                cityList.appendChild(btn);
     
                 let citySearched = data.name;
-                // console.log( citySearched);
                 currentCity.innerHTML = citySearched;
                 console.log("map API data:", data);
                 console.log("windspeed", data.wind.speed);
