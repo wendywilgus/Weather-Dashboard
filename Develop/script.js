@@ -33,10 +33,11 @@ function getCitiesFromStorage() {
         cityList.appendChild(btn);
     
     // onClick eventCallback will call new event function
-    //          inside that function 
+    //         \ inside that function 
     //              define city again
     //              call displayWeather();
     //              call cityCoordinates();
+    // btn.addEventListener("click", cityCoordinates);
     }
 }
 window.onload = getCitiesFromStorage();
@@ -65,7 +66,7 @@ function displayWeather() {
                 // ONLY save city when one is valid
                 searchHistory.push(city);
                 localStorage.setItem("search", JSON.stringify(searchHistory));
-                // getCitiesFromStorage();
+              
                 var btn = document.createElement("button");
                 var t = document.createTextNode(city);
                 btn.appendChild(t);
