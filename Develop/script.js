@@ -20,6 +20,14 @@ var five = [];
 const dateElement = document.getElementById("current-date");
 dateElement.innerHTML = `Today is ${todaysDate}`;
 
+function onSearchClick (city)   {
+    console.log("onSearchClick", city);
+    displayWeather();
+    cityCoordinates();
+    event.preventDefault();
+    document.getElementById('city').value = "";
+}
+
 function getCitiesFromStorage() {
     var previousCities = JSON.parse(localStorage.getItem("search", searchHistory));
     console.log("previous", previousCities);
@@ -32,12 +40,14 @@ function getCitiesFromStorage() {
         var cityList = document.getElementById("history");
         cityList.appendChild(btn);
     
+
     // onClick eventCallback will call new event function
     //         \ inside that function 
     //              define city again
     //              call displayWeather();
     //              call cityCoordinates();
     // btn.addEventListener("click", cityCoordinates);
+        
     }
 }
 window.onload = getCitiesFromStorage();
@@ -116,7 +126,7 @@ function cityCoordinates()  {
 
 
 function extendedForecast(lat,lon) {
-    var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`
+    var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
     console.log("5 days", fiveDays);
 
     fetch(fiveDays)
@@ -135,18 +145,9 @@ function extendedForecast(lat,lon) {
 
 // append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
  //CREATE CARDS FOR EACH ITERATION
-    .then(function (response)   {
-        // five[i].innerHTML = "";
-        // var dayOne = moment(response.list[3].dt_txt).format("ddd, MMM D");
-    })
+//     .then(function (response)   {
+//         // five[i].innerHTML = "";
+//         // var dayOne = moment(response.list[3].dt_txt).format("ddd, MMM D");
+//     })
 }
 
-
-fetchButton.addEventListener('click', function() {
-    displayWeather();
-    cityCoordinates();
-    event.preventDefault();
-    // console.log("City", searchTerm);
-    // displayWeather(searchTerm);
-    // renderSearchHistory();
-})

@@ -29,7 +29,7 @@
                     <input id="city" type="text" class="form-control rounded" placeholder="Enter a city" aria-label="search">
                 </div>
                 <div class="mb-5">
-                    <button id="fetch-button" class="btn btn-primary col-12 rounded mt-2">Search</button>
+                    <button id="fetch-button" class="btn btn-primary col-12 rounded mt-2" onclick= "onSearchClick(document.getElementById('city').value)">Search</button>
                     <hr>
                     <!-- append li here li class="list-group-item"-->
                     <div id="historybox col-12" " onload="getCitiesFromStorage()">
