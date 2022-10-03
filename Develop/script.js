@@ -15,19 +15,22 @@ var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
 
 var historyButton = document.getElementById("history");
+var cardDeck = document.querySelector(".card-deck");
 
 
 
 const dateElement = document.getElementById("current-date");
 dateElement.innerHTML = `Today is ${todaysDate}`;
 
-function onSearchClick (city)   {
+fetchButton.addEventListener("click", function(event)   {
+    event.preventDefault();
     console.log("onSearchClick", city);
     displayWeather();
     cityCoordinates();
-    event.preventDefault();
     document.getElementById('city').value = "";
-}
+})
+// function onSearchClick (city, event)   {
+// }
 
 function getCitiesFromStorage() {
     var previousCities = JSON.parse(localStorage.getItem("search", searchHistory));
@@ -52,7 +55,7 @@ function getCitiesFromStorage() {
         
     }
 }
-window.onload = getCitiesFromStorage();
+// window.onload = getCitiesFromStorage();
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
@@ -131,30 +134,46 @@ function extendedForecast(lat,lon) {
     var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
     // console.log("5 days", fiveDays);
 
+    let five = [];
     fetch(fiveDays)
         .then(function (response)   {
             return response.json();
         })
         .then(function (data)   {
             console.log('extendedForecast onReponse:', data);
-            let five = [];
-                five.push(data.data[3]);
+            
+                five.push(data.list[3]);
                 five.push(data.list[11]);
                 five.push(data.list[19]);
                 five.push(data.list[27]);
                 five.push(data.list[35]);
-            // console.log("five", five);
+            
             // localStorage.setItem = ("day1", five[3]) 
             // localStorage.getItemItem("day1", JSON.stringify(five[3]))
-        }
-        // append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
- //CREATE CARDS FOR EACH ITERATION
-//     .then(function (response)   {
-//         // five[i].innerHTML = "";
-//         // var dayOne = moment(response.list[3].dt_txt).format("ddd, MMM D");
+        })
+        .then(function ()   {
+            console.log(five);
+            for (let i = 0; i < five.length; i++) {
+                var card = document.createElement("div")
+                card.classList.add("card");
+                var temp = document.createElement("h2");
+                temp.textContent = five[i].main.temp;
+                // console.log(five[i].main.temp);
+                card.appendChild(temp);
+                var wind = document.createElement("h3");
+                wind.textContent = five[i].wind.speed;
+                card.appendChild(wind);
+                cardDeck.appendChild(card);
+
+            }
+        })
+    
+        // create other elements for card
+//         // use split to get rid of the time stamp on the date
 //     })
-        
-    }
+    
+    
+}
 
     
 
