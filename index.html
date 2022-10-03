@@ -32,7 +32,7 @@
                     <button id="fetch-button" class="btn btn-primary col-12 rounded mt-2" onclick= "onSearchClick(document.getElementById('city').value)">Search</button>
                     <hr>
                     <!-- append li here li class="list-group-item"-->
-                    <div id="historybox col-12" " onload="getCitiesFromStorage()">
+                    <div id="historybox col-12">
                         <ul id="history" >
                     
                         </ul>
@@ -60,12 +60,14 @@
             </div>
             <h5 class="ml-3 mt-2">5-Day Forecast:</h5>
                 <!-- Cards for 5 Day forecast go here -->
-                <div class="card-deck m-2">
-                    <div class="card day-one bg-dark text-white">Day 1</div>
-                    <div class="card five bg-dark text-white">Day 2</div>
-                    <div class="card fiveDay bg-dark text-white">Day 3</div>
-                    <div class="card fiveDay bg-dark text-white">Day 4</div>
-                    <div class="card fiveDay bg-dark text-white">Day 5</div>
+                <div id="container">
+                    <div class="card-deck m-2">
+                        <div class="card day-one bg-dark text-white">Day 1</div>
+                        <div class="card five bg-dark text-white">Day 2</div>
+                        <div class="card fiveDay bg-dark text-white">Day 3</div>
+                        <div class="card fiveDay bg-dark text-white">Day 4</div>
+                        <div class="card fiveDay bg-dark text-white">Day 5</div>
+                    </div>
                 </div>
             </div>
         </div>

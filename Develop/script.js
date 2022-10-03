@@ -13,7 +13,8 @@ var temp = document.getElementById("tempEl");
 
 var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
-var five = [];
+
+var historyButton = document.getElementById("history");
 
 
 
@@ -30,7 +31,7 @@ function onSearchClick (city)   {
 
 function getCitiesFromStorage() {
     var previousCities = JSON.parse(localStorage.getItem("search", searchHistory));
-    console.log("previous", previousCities);
+    // console.log("previous", previousCities);
     
     // create an HTML Entity button with City label
     for (var i = 0; i < previousCities.length; i++) {
@@ -46,7 +47,8 @@ function getCitiesFromStorage() {
     //              define city again
     //              call displayWeather();
     //              call cityCoordinates();
-    // btn.addEventListener("click", cityCoordinates);
+    historyButton.addEventListener("click", cityCoordinates);
+        console.log("click", cityCoordinates());
         
     }
 }
@@ -127,7 +129,7 @@ function cityCoordinates()  {
 
 function extendedForecast(lat,lon) {
     var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${APIKey}`;
-    console.log("5 days", fiveDays);
+    // console.log("5 days", fiveDays);
 
     fetch(fiveDays)
         .then(function (response)   {
@@ -135,19 +137,27 @@ function extendedForecast(lat,lon) {
         })
         .then(function (data)   {
             console.log('extendedForecast onReponse:', data);
-            five.push(data.list[3]);
-            five.push(data.list[11]);
-            five.push(data.list[19]);
-            five.push(data.list[27]);
-            five.push(data.list[35]);
-        })
- 
-
-// append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
+            let five = [];
+                five.push(data.data[3]);
+                five.push(data.list[11]);
+                five.push(data.list[19]);
+                five.push(data.list[27]);
+                five.push(data.list[35]);
+            // console.log("five", five);
+            // localStorage.setItem = ("day1", five[3]) 
+            // localStorage.getItemItem("day1", JSON.stringify(five[3]))
+        }
+        // append five day data to the id cards at the bottom of screen.  Generate with append then create a for loop to grab each card
  //CREATE CARDS FOR EACH ITERATION
 //     .then(function (response)   {
 //         // five[i].innerHTML = "";
 //         // var dayOne = moment(response.list[3].dt_txt).format("ddd, MMM D");
 //     })
-}
+        
+    }
 
+    
+
+
+    
+             
