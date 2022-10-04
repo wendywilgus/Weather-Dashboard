@@ -1,12 +1,12 @@
 
-var fetchButton = document.getElementById('fetch-button');
+var fetchButton = document.getElementById('fetch-button') //search button 
 var APIKey= "e5fd74ef0282ecdaf377823bb26acafb";
 var city;
-let searchHistory = JSON.parse(localStorage.getItem("search"));
-if (!searchHistory) {
-    searchHistory = [];
+let previousCities = JSON.parse(localStorage.getItem("search"));
+if (!previousCities) {
+    previousCities = [];
 } 
-console.log("history", searchHistory);
+console.log("history", previousCities);
 var currentCity = document.getElementById("current-city");
 var todaysDate = moment().format("MMMM Do, YYYY");
 var temp = document.getElementById("tempEl");
@@ -24,38 +24,35 @@ dateElement.innerHTML = `Today is ${todaysDate}`;
 
 fetchButton.addEventListener("click", function(event)   {
     event.preventDefault();
-    console.log("onSearchClick", city);
+    // console.log("onSearchClick", city);
     displayWeather();
     cityCoordinates();
     document.getElementById('city').value = "";
 })
-// function onSearchClick (city, event)   {
-// }
+// kicks off all functions when search button is clicked
+
+function historyCallback(param) {
+    console.log("historyCallback param", param);
+    // displayWeather();
+    // cityCoordinates();
+    // document.getElementById('city').value = "";
+
+}
 
 function getCitiesFromStorage() {
-    var previousCities = JSON.parse(localStorage.getItem("search", searchHistory));
-    // console.log("previous", previousCities);
-    
-    // create an HTML Entity button with City label
+// create an HTML Entity button with City label
     for (var i = 0; i < previousCities.length; i++) {
         var btn = document.createElement("button");
         var t = document.createTextNode(previousCities[i]);
+        console.log("previousCities", previousCities[i]);
         btn.appendChild(t);
         var cityList = document.getElementById("history");
         cityList.appendChild(btn);
-    
-
-    // onClick eventCallback will call new event function
-    //         \ inside that function 
-    //              define city again
-    //              call displayWeather();
-    //              call cityCoordinates();
-    historyButton.addEventListener("click", cityCoordinates);
-        console.log("click", cityCoordinates());
-        
+        btn.addEventListener("click", historyCallback);
     }
 }
-// window.onload = getCitiesFromStorage();
+
+getCitiesFromStorage();
 
 function kelvinConverter(valNum){
     valNum = parseFloat(valNum);
@@ -65,22 +62,22 @@ function kelvinConverter(valNum){
 
 function displayWeather() {
     city = document.getElementById('city').value;
-    console.log("displayWeather city", city);
+    // console.log("displayWeather city", city);
  
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
 
     
     fetch(requestURL)
         .then(function (response) {
-            console.log("map API response:", response);
+            // console.log("map API response:", response);
             return response.json();   
         })
         .then(function (data) {
             console.log('displayWeather onResponse', data);
             if(data.cod == '200') {
                 // ONLY save city when one is valid
-                searchHistory.push(city);
-                localStorage.setItem("search", JSON.stringify(searchHistory));
+                previousCities.push(city);
+                localStorage.setItem("search", JSON.stringify(previousCities));
               
                 var btn = document.createElement("button");
                 var t = document.createTextNode(city);
@@ -187,14 +184,13 @@ function extendedForecast(lat,lon) {
 
 
             }
-        })
-
-    
-    
+        }) 
 }
 
-    
-
-
-    
-             
+// function recallCityData()   {
+//     var cityHistory = localStorage.getItem("search");
+//     var cityHistoryList = JSON.parse(cityHistory);
+//         cityCoordinates(cityHistoryList);
+//         displayWeather();
+//         extendedForecast();
+//     }
