@@ -153,6 +153,7 @@ function extendedForecast(lat,lon) {
         })
         .then(function ()   {
             console.log(five);
+            cardDeck.innerHTML = "";
             for (let i = 0; i < five.length; i++) {
                 var card = document.createElement("div")
                 card.classList.add("card");
@@ -183,6 +184,7 @@ function extendedForecast(lat,lon) {
                 var hum = document.createElement("h6");
                 hum.textContent = "Humidity: " + five[i].main.humidity + "%";
                 card.appendChild(hum);
+
 
             }
         })
