@@ -156,21 +156,37 @@ function extendedForecast(lat,lon) {
             for (let i = 0; i < five.length; i++) {
                 var card = document.createElement("div")
                 card.classList.add("card");
-                var temp = document.createElement("h2");
-                temp.textContent = five[i].main.temp;
-                // console.log(five[i].main.temp);
-                card.appendChild(temp);
-                var wind = document.createElement("h3");
-                wind.textContent = five[i].wind.speed;
-                card.appendChild(wind);
                 cardDeck.appendChild(card);
+
+                var date = five[i].dt;
+                var dt = new Date(date * 1000);
+                var datec = document.createElement("p");
+                        //datec = moment(date).format("MM DD YYYY");
+                        datec.textContent = (moment(dt).format("MM/DD/YYYY"));
+                        card.append(datec);
+
+                var icon = document.createElement("img");     
+                icon.src = ("src","http://openweathermap.org/img/w/" + five[i].weather[0].icon + ".png"); 
+              
+                card.appendChild(icon);
+              
+                
+                var temp = document.createElement("h6");
+                temp.textContent = "Temp: " + five[i].main.temp + "°F";
+                // console.log(five[i].main.temp);
+                card.append(temp);
+
+                var wind = document.createElement("h6");
+                wind.textContent = "Wind: " + five[i].wind.speed + "MPH";
+                card.appendChild(wind);
+                
+                var hum = document.createElement("h6");
+                hum.textContent = "Humidity: " + five[i].main.humidity + "%";
+                card.appendChild(hum);
 
             }
         })
-    
-        // create other elements for card
-//         // use split to get rid of the time stamp on the date
-//     })
+
     
     
 }
