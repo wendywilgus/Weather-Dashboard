@@ -14,6 +14,7 @@ var temp = document.getElementById("tempEl");
 var currentHumidity= $("#humidity");
 var windSpeed = $("windSpeed");
 
+var cityList = document.getElementById("history");
 var historyButton = document.getElementById("history");
 var cardDeck = document.querySelector(".card-deck");
 
@@ -25,33 +26,38 @@ dateElement.innerHTML = `Today is ${todaysDate}`;
 fetchButton.addEventListener("click", function(event)   {
     event.preventDefault();
     // console.log("onSearchClick", city);
+    city = document.getElementById('city').value;
     displayWeather();
     cityCoordinates();
     document.getElementById('city').value = "";
 })
 // kicks off all functions when search button is clicked
 
-function historyCallback(param) {
-    console.log("historyCallback param", param);
-    // displayWeather();
-    // cityCoordinates();
+
+function historyCallback(event) {
+    console.log(event.target);
+    var individualCity = event.target;
+    city = individualCity.textContent;
+    // console.log("now", buttonClicked);
+    displayWeather();
+    cityCoordinates();
     // document.getElementById('city').value = "";
-
 }
+    
 
+    
 function getCitiesFromStorage() {
 // create an HTML Entity button with City label
     for (var i = 0; i < previousCities.length; i++) {
         var btn = document.createElement("button");
+        btn.setAttribute
         var t = document.createTextNode(previousCities[i]);
         console.log("previousCities", previousCities[i]);
         btn.appendChild(t);
-        var cityList = document.getElementById("history");
         cityList.appendChild(btn);
-        btn.addEventListener("click", historyCallback);
     }
 }
-
+cityList.addEventListener("click", historyCallback);
 getCitiesFromStorage();
 
 function kelvinConverter(valNum){
@@ -61,7 +67,6 @@ function kelvinConverter(valNum){
 
 
 function displayWeather() {
-    city = document.getElementById('city').value;
     // console.log("displayWeather city", city);
  
     var requestURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}`;
@@ -76,7 +81,8 @@ function displayWeather() {
             console.log('displayWeather onResponse', data);
             if(data.cod == '200') {
                 // ONLY save city when one is valid
-                previousCities.push(city);
+                if (!previousCities.includes(city)) {
+                previousCities.push(city);       
                 localStorage.setItem("search", JSON.stringify(previousCities));
               
                 var btn = document.createElement("button");
@@ -84,6 +90,7 @@ function displayWeather() {
                 btn.appendChild(t);
                 var cityList = document.getElementById("history");
                 cityList.appendChild(btn);
+                };
     
                 let citySearched = data.name;
                 currentCity.innerHTML = citySearched;
@@ -187,10 +194,3 @@ function extendedForecast(lat,lon) {
         }) 
 }
 
-// function recallCityData()   {
-//     var cityHistory = localStorage.getItem("search");
-//     var cityHistoryList = JSON.parse(cityHistory);
-//         cityCoordinates(cityHistoryList);
-//         displayWeather();
-//         extendedForecast();
-//     }

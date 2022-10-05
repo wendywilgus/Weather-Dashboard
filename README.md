@@ -68,5 +68,5 @@ The following resources were helpful in researching best practices and problem-s
 
 - APIs https://medium.com/epfl-extension-school/an-illustrated-introduction-to-apis-10f8000313b9 
 - Moment.js https://medium.com/@thejasonfile/a-moment-with-moment-js-c5d097d2b61c
--Event Listeners https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
--Local Storage https://egghead.io/lessons/javascript-avoid-losing-text-when-refreshing-the-browser-with-localstorage
+- Event Listeners https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+- Local Storage https://egghead.io/lessons/javascript-avoid-losing-text-when-refreshing-the-browser-with-localstorage
