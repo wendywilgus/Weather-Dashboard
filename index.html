@@ -24,6 +24,7 @@
     <div class="row">
         <div class="col-3 ml-3 mt-2">
             <div class="row input-group">
+                <!-- allows the user to type in the name of a city to search for weather forecast -->
                 <h3 id="searchResults">Search for a City:</h3>
                 <div class="input-group">
                     <input id="city" type="text" class="form-control rounded" placeholder="Enter a city" aria-label="search">
@@ -31,7 +32,7 @@
                 <div class="mb-5">
                     <button id="fetch-button" class="btn btn-primary col-12 rounded mt-2">Search</button>
                     <hr>
-                    <!-- append li here li class="list-group-item"-->
+                    <!-- append city history searches here-->
                     <div id="historybox col-12">
                         <ul id="history" >
                     
@@ -49,10 +50,7 @@
                 <div class="col-sm-12" id="current-weather">
                     <h3 class="city-name mb-1 mt-2 bolder" id="current-city"></h3>
                     <div id="current-date">Today's Date</div>
-                    <div class="weather-icon"></div>
-                    <!-- <div class="row">Temperature: <p class="temperature" id="tempEl"></p></div> -->
-                    
-                    
+                    <div class="weather-icon"></div>                    
                     <div id="tempEl">Temperature:</div>
                     <div class="humidity">Humidity:</div> 
                     <div id="windSpeed">Wind Speed:</div>
